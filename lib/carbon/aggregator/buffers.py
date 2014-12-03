@@ -60,7 +60,8 @@ class MetricBuffer:
     age_threshold = current_interval - (settings['MAX_AGGREGATION_INTERVALS'] * self.aggregation_frequency)
 
     for buffer in self.interval_buffers.values():
-      if buffer.active:
+      #if buffer.active:
+      if buffer.active and current_interval > (buffer.interval + self.aggregation_frequency):
         value = self.aggregation_func(buffer.values)
         datapoint = (buffer.interval, value)
         state.events.metricGenerated(self.metric_path, datapoint)
